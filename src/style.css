@@ -1,0 +1,126 @@
+.max-height {
+    /* background-color: red; */
+    height: 750px;
+}
+
+.header {
+    padding: 12px;
+
+}
+
+.header p {
+    font-size: 10px;
+    font-style: italic;
+    color: #9a9a9a;
+}
+
+.my-row {
+    height: 100%;
+}
+
+
+.login-container {
+    width: 80%;
+    margin: auto;
+    /* background-color: red; */
+    padding: 20px;
+    margin-top: 30px;
+}
+
+.login-container .title {
+    padding: 12px;
+}
+
+.login-container .title p {
+    font-size: 13px;
+    color: #797979;
+}
+
+
+.form-control {
+    margin-bottom: 5px;
+    border: none;
+}
+
+.form-control label {
+    margin-bottom: 5px;
+}
+
+.form-control input {
+    padding: 12px !important;
+}
+
+.greyed {
+    background-color: #f0f0f0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.extra-row {
+    padding: 0px 20px;
+}
+
+.extra-row .extra-right {
+    text-align: right;
+}
+
+.myButton {
+    width: 100%;
+    height: auto;
+}
+
+.myButton img {
+    width: 20px;
+}
+
+.myButton.transparent {
+    background-color: transparent;
+    border: 1px solid #1677ff;
+    color: #1677ff;
+}
+
+.myButton span {
+    padding: 5px;
+}
+
+@media (max-width: 560px) {
+    .my-row {
+        height: auto;
+        padding: 10px;
+        padding-top: 60px;
+    }
+
+    .greyed {
+        background-color: transparent;
+        height: auto;
+    }
+
+    .max-height {
+        height: auto;
+
+    }
+
+    .greyed img {
+        width: 50px;
+    }
+
+    .header {
+        display: none;
+    }
+
+    .login-container {
+        width: 100%;
+        margin: 0px;
+        padding: 5px;
+    }
+
+    .login-container .title {
+        text-align: center;
+    }
+
+    .login-container .login-form {
+        padding-top: 20px;
+    }
+}
