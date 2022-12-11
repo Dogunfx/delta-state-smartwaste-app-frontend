@@ -12,7 +12,11 @@ export default function AppLayout({
     <div>
       <Container fluid>
         <Row className="my-row">
-          <Col sm={{ span: 6, order: "first" }} xs={{ order: "last" }}>
+          <Col
+            sm={{ span: 6, order: "first" }}
+            xs={{ order: "last" }}
+            style={{ padding: "0px" }}
+          >
             {leftComponent}
           </Col>
 

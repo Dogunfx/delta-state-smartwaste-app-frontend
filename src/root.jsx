@@ -6,11 +6,14 @@ import "./style.css";
 import "antd/dist/reset.css";
 import Register from "./pages/signup";
 import ResetPassword from "./pages/resetpassword";
+import Page404 from "./pages/errors/404";
+import Dashboard from "./pages/dashboard";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+    errorElement: <Page404 />,
   },
   {
     path: "/sign-up",
@@ -19,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: "/forgotten-password",
     element: <ResetPassword />,
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
   },
 ]);
 

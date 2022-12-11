@@ -6,8 +6,9 @@ import google_logo from "../images/google-logo.png";
 import Header from "./includes/header";
 import AppLayout from "./includes/app-layout";
 import LogoComponent from "./includes/logo-component";
-
+import { useNavigate } from "react-router-dom";
 export default function Home() {
+  const navigator = useNavigate();
   function onFinish(values) {}
 
   function onFinishFailed(values) {}
@@ -63,7 +64,13 @@ export default function Home() {
             <Row>
               <Col>
                 <div className="form-control">
-                  <Button type="primary" className="myButton">
+                  <Button
+                    onClick={() => {
+                      navigator("./dashboard");
+                    }}
+                    type="primary"
+                    className="myButton"
+                  >
                     Login
                   </Button>
                 </div>
