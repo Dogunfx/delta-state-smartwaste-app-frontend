@@ -1,7 +1,17 @@
 import React, { useState } from "react";
-import { Drawer, Button } from "antd";
+import { Drawer, Button, Card } from "antd";
 import { Col, Container, Row, Badge } from "react-bootstrap";
-import { UserOutlined, SearchOutlined, MenuOutlined } from "@ant-design/icons";
+import {
+  UserOutlined,
+  SearchOutlined,
+  MenuOutlined,
+  HomeOutlined,
+  WalletOutlined,
+  LogoutOutlined,
+  DeleteOutlined,
+  UserAddOutlined,
+  SyncOutlined,
+} from "@ant-design/icons";
 import { APP_NAME } from "../constants";
 import logo from "../images/logo.png";
 
@@ -14,6 +24,14 @@ export default function Dashboard() {
   function onClose() {
     setOpen(false);
   }
+
+  const Title = (
+    <div className="drawer-title">
+      <h3 className="mp-x">Dashboard Menu</h3>
+      <p className="mp-x">{APP_NAME}</p>
+    </div>
+  );
+
   return (
     <div className="dashboard-container">
       <Container fluid>
@@ -35,7 +53,7 @@ export default function Dashboard() {
                     />
                   </div>
                   <div className="user-name-badge">
-                    <Badge pill bg="secondary" className="my-badge">
+                    <Badge pill bg="primary" className="my-badge">
                       <UserOutlined />
                       <span> DogunFX</span>
                     </Badge>
@@ -66,11 +84,73 @@ export default function Dashboard() {
                 </p>
               </div>
             </div>
+            <div className="body ">
+              <div className="card-row ">
+                <Row>
+                  <Col sm={{ span: 4 }} className="card-container">
+                    <Card bordered={false} title="Waste News 1">
+                      <p>
+                        Lorem, ipsum dolor sit amet consectetur adipisicing
+                        elit. Repellat nobis temporibus porro quae qui quas
+                        sequi exercitationem eveniet nemo vitae amet illum
+                      </p>
+                    </Card>
+                  </Col>
+                  <Col sm={{ span: 4 }} className="card-container">
+                    <Card bordered={false} title="Waste News 2">
+                      <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Rem molestias consequatur explicabo eum minima voluptate
+                        recusandae modi, asperiores voluptas quasi labore facere
+                      </p>
+                    </Card>
+                  </Col>
+                  <Col sm={{ span: 4 }} className="card-container">
+                    <Card bordered={false} title="Waste News 3">
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit. Consequuntur incidunt, ullam ex, modi illum ipsa
+                        aliquam alias quisquam quo quidem voluptas nemo
+                      </p>
+                    </Card>
+                  </Col>
+                </Row>
+                <Button className="fixButton v-text">See All</Button>
+              </div>
+              <div className="wallet-row normal-space">
+                <Row>
+                  <Col sm={{ span: 7 }}>
+                    <div className="balance-col">
+                      <div className="balance-header">
+                        <p className="mp-x">Your Wallet Balance</p>
+                        <Button type="primary" size="small">
+                          <DeleteOutlined />
+                          Dispose waste
+                        </Button>
+                      </div>
+                      <h1>NGN 65,000 </h1>
+                    </div>
+                  </Col>
+                  <Col sm={{ span: 5 }}>
+                    <div className="balance-col">
+                      <div className="balance-header">
+                        <p className="mp-x">Your Recycled Waste Commission</p>
+                        <Button type="primary" size="small" className="">
+                          <SyncOutlined />
+                          Recycle
+                        </Button>
+                      </div>
+                      <h1>NGN 4,130 </h1>
+                    </div>
+                  </Col>
+                </Row>
+              </div>
+            </div>
           </div>
         </div>
 
         <Drawer
-          title="Dashboard Menu"
+          title={Title}
           placement="left"
           headerStyle={{ backgroundColor: "#d3f7fb" }}
           bodyStyle={{ backgroundColor: "#d3f7fb" }}
@@ -80,22 +160,40 @@ export default function Dashboard() {
           <nav>
             <ul>
               <li>
-                <a href="./dashboard">Home</a>
+                <div className="menu-item">
+                  <HomeOutlined />
+                  <a href="./dashboard">Home</a>
+                </div>
               </li>
               <li>
-                <a href="./recycle">Recycle Waste</a>
+                <div className="menu-item">
+                  <SyncOutlined />
+                  <a href="./recycle">Recycle Waste</a>
+                </div>
               </li>
               <li>
-                <a href="./dispose">DIspose Waste</a>
+                <div className="menu-item">
+                  <DeleteOutlined />
+                  <a href="./dispose">DIspose Waste</a>
+                </div>
               </li>
               <li>
-                <a href="./funding">Fund Wallet</a>
+                <div className="menu-item">
+                  <WalletOutlined />
+                  <a href="./funding">Fund Wallet</a>
+                </div>
               </li>
               <li>
-                <a href="./update-profile">Update Profile</a>
+                <div className="menu-item">
+                  <UserAddOutlined />
+                  <a href="./update-profile">Update Profile</a>
+                </div>
               </li>
               <li>
-                <a href="./">Logout</a>
+                <div className="menu-item">
+                  <LogoutOutlined />
+                  <a href="./">Logout</a>
+                </div>
               </li>
             </ul>
           </nav>
