@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Drawer, Button, Card } from "antd";
-import { Col, Container, Row, Badge } from "react-bootstrap";
+import { Col, Container, Row, Badge, Alert } from "react-bootstrap";
 import {
   UserOutlined,
   SearchOutlined,
@@ -17,6 +17,7 @@ import logo from "../images/logo.png";
 
 export default function Dashboard() {
   const [open, setOpen] = useState(false);
+  const [show, setShow] = useState(true);
 
   function showDrawer() {
     setOpen(true);
@@ -82,6 +83,20 @@ export default function Dashboard() {
                 <p className="mp-x">
                   {APP_NAME} your easy approach for smart waste management{" "}
                 </p>
+                {show ? (
+                  <Alert
+                    variant="danger"
+                    onClose={() => setShow(false)}
+                    dismissible
+                  >
+                    <Alert.Heading>Email Not verified yet</Alert.Heading>
+                    <p>
+                      Hello Dogunfx we noticed your email address has not been
+                      verified, please verified your email to enjoy using
+                      {APP_NAME}
+                    </p>
+                  </Alert>
+                ) : null}
               </div>
             </div>
             <div className="body ">
