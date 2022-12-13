@@ -6,11 +6,43 @@ import google_logo from "../images/google-logo.png";
 import Header from "./includes/header";
 import AppLayout from "./includes/app-layout";
 import LogoComponent from "./includes/logo-component";
+import { toast } from "react-toastify";
+import API_REQUEST from "../auth/api";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { generateToastError } from "../func/func";
 export default function Home() {
-  const navigator = useNavigate();
-  function onFinish(values) {}
+  const [isMakingRequest, setMakingRequest] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+  const [userPassword, setUserPassword] = useState("");
+  const gotoRoute = useNavigate();
 
+  async function onFinish(values) {
+    setMakingRequest(true);
+    try {
+      const http_responds = await API_REQUEST.AXIOS_INSTANCE({
+        url: API_REQUEST.LOGIN_END_POINT,
+        method: "post",
+        data: {
+          email: userEmail,
+          password: userPassword,
+        },
+      });
+      const response = http_responds.data;
+      toast.success(response.message);
+      toast.info("You will be redirected shortly");
+      setTimeout(() => {
+        gotoRoute("/dashboard");
+      }, 2000);
+    } catch (error) {
+      generateToastError(error);
+    }
+    setMakingRequest(false);
+  }
+
+  function nullFeature() {
+    toast.info("Sorry!! this feature is not available yet");
+  }
   function onFinishFailed(values) {}
 
   const leftComponent = (
@@ -28,14 +60,21 @@ export default function Home() {
             method="post"
             autoComplete="off"
             initialValues={{ remember: true }}
-            onFinish={onFinish}
+            // onFinish={onFinish}
             onFinishFailed={onFinishFailed}
           >
             <Row>
               <Col>
                 <div className="form-control">
                   <label htmlFor="">Email</label>
-                  <Input placeholder="Enter Your Email" />
+                  <Input
+                    placeholder="Enter Your Email"
+                    type="email"
+                    value={userEmail}
+                    onChange={(evt) => {
+                      setUserEmail(evt.target.value);
+                    }}
+                  />
                 </div>
               </Col>
             </Row>
@@ -43,7 +82,13 @@ export default function Home() {
               <Col>
                 <div className="form-control">
                   <label htmlFor="">Password</label>
-                  <Input.Password placeholder="Input Password" />
+                  <Input.Password
+                    placeholder="Input Password"
+                    value={userPassword}
+                    onChange={(evt) => {
+                      setUserPassword(evt.target.value);
+                    }}
+                  />
                 </div>
               </Col>
             </Row>
@@ -65,11 +110,10 @@ export default function Home() {
               <Col>
                 <div className="form-control">
                   <Button
-                    onClick={() => {
-                      navigator("./dashboard");
-                    }}
                     type="primary"
                     className="myButton"
+                    onClick={onFinish}
+                    loading={isMakingRequest}
                   >
                     Login
                   </Button>
@@ -79,7 +123,11 @@ export default function Home() {
             <Row>
               <Col>
                 <div className="form-control">
-                  <Button type="primary" className="myButton transparent">
+                  <Button
+                    type="primary"
+                    className="myButton transparent"
+                    onClick={nullFeature}
+                  >
                     <img
                       src={google_logo}
                       alt="google logo"

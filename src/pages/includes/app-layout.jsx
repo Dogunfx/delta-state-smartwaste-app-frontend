@@ -2,6 +2,7 @@ import React from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { ToastContainer } from "react-toastify";
 
 export default function AppLayout({
   leftComponent,
@@ -29,6 +30,7 @@ export default function AppLayout({
           </Col>
         </Row>
       </Container>
+      <ToastContainer />
     </div>
   );
 }
