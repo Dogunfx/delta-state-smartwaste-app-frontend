@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import Home from "./pages/home";
@@ -9,6 +9,7 @@ import Register from "./pages/signup";
 import ResetPassword from "./pages/resetpassword";
 import Page404 from "./pages/errors/404";
 import Dashboard from "./pages/dashboard";
+import { AuthContext, useAuth } from "./auth/authContext";
 
 const router = createBrowserRouter([
   {
@@ -31,5 +32,12 @@ const router = createBrowserRouter([
 ]);
 
 export default function RootApp() {
-  return <RouterProvider router={router}></RouterProvider>;
+  const authContext = useAuth();
+  const [isAuth, setIsAuth] = useState(authContext);
+
+  return (
+    <AuthContext.Provider value={{ isAuth, setIsAuth }}>
+      <RouterProvider router={router}></RouterProvider>
+    </AuthContext.Provider>
+  );
 }

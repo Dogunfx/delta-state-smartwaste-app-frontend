@@ -1,20 +1,22 @@
 import React from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { Input, Button, Checkbox, Form } from "antd";
+import { Input, Button, Checkbox, Form, Alert } from "antd";
 import google_logo from "../images/google-logo.png";
 import Header from "./includes/header";
 import AppLayout from "./includes/app-layout";
 import LogoComponent from "./includes/logo-component";
 import { toast } from "react-toastify";
-import API_REQUEST from "../auth/api";
+import API_REQUEST, { storeToken } from "../auth/api";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { generateToastError } from "../func/func";
-export default function Home() {
+
+export default function Home({ flashMessage }) {
   const [isMakingRequest, setMakingRequest] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const location = useLocation();
   const gotoRoute = useNavigate();
 
   async function onFinish(values) {
@@ -31,9 +33,14 @@ export default function Home() {
       const response = http_responds.data;
       toast.success(response.message);
       toast.info("You will be redirected shortly");
+      storeToken(response.token);
       setTimeout(() => {
-        gotoRoute("/dashboard");
-      }, 2000);
+        if (location.pathname === "/dashboard") {
+          gotoRoute(0);
+        } else {
+          gotoRoute("/dashboard");
+        }
+      }, 4000);
     } catch (error) {
       generateToastError(error);
     }
@@ -50,8 +57,17 @@ export default function Home() {
       <Header />
       <div className="login-container">
         <div className="title">
-          <h3>Get Started</h3>
+          <h3>Login</h3>
           <p>Start Managing waste smartly</p>
+          {flashMessage && (
+            <Alert
+              message={flashMessage.message}
+              description={flashMessage.description}
+              type={flashMessage.type}
+              showIcon
+              closable
+            />
+          )}
         </div>
 
         <div className="login-form">

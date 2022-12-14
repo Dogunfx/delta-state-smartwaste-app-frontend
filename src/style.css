@@ -133,14 +133,21 @@ nav ul li .menu-item {
 }
 
 
-nav ul li a {
+nav ul li a,
+nav ul li .item {
     display: block;
+    cursor: pointer;
     text-decoration: none;
     color: #5d5d5d;
     padding: 10px;
     flex: 1;
 
     /* background-color: #1677ff; */
+}
+
+nav ul li a:hover,
+nav ul li .item:hover {
+    color: #1677ff;
 }
 
 nav ul li:hover {
@@ -287,6 +294,7 @@ nav ul li:hover {
     border-right: 1px solid silver;
     padding: 12px;
 }
+
 .balance-header {
     display: flex;
 }

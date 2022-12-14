@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Drawer, Button, Card } from "antd";
+import React, { useState, useEffect } from "react";
+import { Drawer, Button, Card, Skeleton } from "antd";
 import { Col, Container, Row, Badge, Alert } from "react-bootstrap";
 import {
   UserOutlined,
@@ -14,10 +14,33 @@ import {
 } from "@ant-design/icons";
 import { APP_NAME } from "../constants";
 import logo from "../images/logo.png";
+import { useAuth } from "../auth/authContext";
+import API_REQUEST, { logout } from "../auth/api";
+import { generateToastError } from "../func/func";
+import Home from "./home";
 
 export default function Dashboard() {
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(true);
+  const { isAuth, setIsAuth } = useAuth();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function checkAuth() {
+      try {
+        const https_response = await API_REQUEST.AXIOS_AUTH_INSTANCE({
+          method: "GET",
+          url: API_REQUEST.PROFILE_END_POINT,
+        });
+        setIsAuth(https_response.data);
+      } catch (error) {
+        setIsAuth(null);
+        generateToastError(error);
+      }
+      setIsLoading(false);
+    }
+    checkAuth();
+  }, [setIsAuth, isLoading]);
 
   function showDrawer() {
     setOpen(true);
@@ -33,7 +56,7 @@ export default function Dashboard() {
     </div>
   );
 
-  return (
+  const DashboardArea = (
     <div className="dashboard-container">
       <Container fluid>
         <div className="dashboard">
@@ -56,7 +79,7 @@ export default function Dashboard() {
                   <div className="user-name-badge">
                     <Badge pill bg="primary" className="my-badge">
                       <UserOutlined />
-                      <span> DogunFX</span>
+                      <span> {isAuth != null ? isAuth.name : ""}</span>
                     </Badge>
                   </div>
                   <div className="dashboard-search">
@@ -91,8 +114,13 @@ export default function Dashboard() {
                   >
                     <Alert.Heading>Email Not verified yet</Alert.Heading>
                     <p>
-                      Hello Dogunfx we noticed your email address has not been
-                      verified, please verified your email to enjoy using
+                      Hello{" "}
+                      <strong>
+                        {isAuth != null ? isAuth.name : ""}
+                        {"  "}
+                      </strong>
+                      we noticed your email address has not been verified,
+                      please verified your email to enjoy using
                       {APP_NAME}
                     </p>
                   </Alert>
@@ -143,19 +171,23 @@ export default function Dashboard() {
                           Dispose waste
                         </Button>
                       </div>
-                      <h1>NGN 65,000 </h1>
+                      <h1>NGN {isAuth !== null ? isAuth.wallet : "0.0"} </h1>
                     </div>
                   </Col>
                   <Col sm={{ span: 5 }}>
                     <div className="balance-col">
                       <div className="balance-header">
                         <p className="mp-x">Your Recycled Waste Commission</p>
-                        <Button type="primary" size="small" className="">
-                          <SyncOutlined />
+                        <Button
+                          type="primary"
+                          size="small"
+                          className=""
+                          icon={<SyncOutlined />}
+                        >
                           Recycle
                         </Button>
                       </div>
-                      <h1>NGN 4,130 </h1>
+                      <h1>NGN {isAuth !== null ? isAuth.wallet : "0.0"} </h1>
                     </div>
                   </Col>
                 </Row>
@@ -204,10 +236,15 @@ export default function Dashboard() {
                   <a href="./update-profile">Update Profile</a>
                 </div>
               </li>
-              <li>
+              <li
+                onClick={() => {
+                  setIsAuth(null);
+                  logout();
+                }}
+              >
                 <div className="menu-item">
                   <LogoutOutlined />
-                  <a href="./">Logout</a>
+                  <span className="item">Logout</span>
                 </div>
               </li>
             </ul>
@@ -215,5 +252,21 @@ export default function Dashboard() {
         </Drawer>
       </Container>
     </div>
+  );
+
+  return (
+    <Skeleton loading={isLoading}>
+      {isAuth != null ? (
+        DashboardArea
+      ) : (
+        <Home
+          flashMessage={{
+            type: "error",
+            message: "Please login ",
+            description: "Your Session has expired, please login to continue ",
+          }}
+        />
+      )}
+    </Skeleton>
   );
 }
