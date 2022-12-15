@@ -39,6 +39,7 @@ export default function Home({ flashMessage }) {
           gotoRoute(0);
         } else {
           gotoRoute("/dashboard");
+          gotoRoute(0);
         }
       }, 4000);
     } catch (error) {
