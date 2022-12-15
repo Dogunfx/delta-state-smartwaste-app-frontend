@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const isLive = false;
+const isLive = true;
 const API_V1 = isLive
   ? "https://delta-state-smart-waste.onrender.com/api/v1/"
   : "http://127.0.0.1:3003/api/v1/";
