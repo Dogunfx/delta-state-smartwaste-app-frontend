@@ -7,6 +7,8 @@ const API_V1 = isLive
 const LOGIN_END_POINT = `user/login`;
 const REGISTER_END_POINT = `user/register`;
 const PROFILE_END_POINT = `user/profile`;
+const GENERATE_OTP_END_POINT = `user/generate-reset-code`;
+const UPDATE_PASSWORD_END_POINT = `user/update-password`;
 
 const AXIOS_INSTANCE = axios.create({
   baseURL: API_V1,
@@ -28,6 +30,8 @@ const API_REQUEST = {
   AXIOS_AUTH_INSTANCE,
   PROFILE_END_POINT,
   REGISTER_END_POINT,
+  GENERATE_OTP_END_POINT,
+  UPDATE_PASSWORD_END_POINT,
 };
 
 export function storeToken(token) {
